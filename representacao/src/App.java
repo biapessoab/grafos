@@ -1,5 +1,6 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -28,24 +29,29 @@ public class App {
         int vertices = sc.nextInt();
         int edges = sc.nextInt();
 
+        int[] originArray = new int[edges+1];
+        int[] destinationArray = new int[edges+1];
+
         // creates the edges array
-        ArrayList<Aresta> edgesArray = new ArrayList<Aresta>();
+        int cont = 1;
 
         // reads the file and adds the vertices to the edges array
         while (sc.hasNext()) {
             int start = sc.nextInt();
             int end = sc.nextInt();
 
-            Aresta edge = new Aresta(start, end);
-
-            edgesArray.add(edge);
+            originArray[cont] = start;
+            destinationArray[cont] = end;
+            cont++;
         }
+
+        sc.close();
 
         // checks the out degree
         int[] outDegrees = new int[vertices + 1];
 
-        for (Aresta edge : edgesArray) {
-            outDegrees[edge.getStart()]++;
+        for (int i : originArray) {
+            outDegrees[i]++;
         }
 
         int maxOutDegreeVertex = 1;
@@ -61,17 +67,20 @@ public class App {
         // gets the successors
         ArrayList<Integer> successors = new ArrayList<Integer>();
 
-        for (Aresta edge : edgesArray) {
-            if (edge.getStart() == maxOutDegreeVertex) {
-                successors.add(edge.getEnd());
+        int count = 1;
+
+        for (int edge : originArray) {
+            if (edge == maxOutDegreeVertex) {
+                successors.add(destinationArray[count]);
             }
+            count++;
         }
 
         // checks the in degree
         int[] inDegrees = new int[vertices + 1];
 
-        for (Aresta edge : edgesArray) {
-            inDegrees[edge.getEnd()]++;
+        for (int i : destinationArray) {
+            inDegrees[i]++;
         }
 
         int maxInDegreeVertex = 1;
@@ -84,17 +93,19 @@ public class App {
             }
         }
 
-        // gets the predecessors
-        ArrayList<Integer> predecessor = new ArrayList<Integer>();
+        // gets the successors
+        ArrayList<Integer> predecessors = new ArrayList<Integer>();
 
-        for (Aresta edge : edgesArray) {
-            if (edge.getEnd() == maxInDegreeVertex) {
-                predecessor.add(edge.getStart());
+        int c = 1;
+        for (int edge : destinationArray) {
+            if (edge == maxInDegreeVertex) {
+                predecessors.add(originArray[c]);
             }
+            c++;
         }
 
         System.out.println("O vértice " + maxOutDegreeVertex + " tem o maior grau de saída (" + maxOutDegree + ")\nConjunto de sucessores: " + successors);
-        System.out.println("O vértice " + maxInDegreeVertex + " tem o maior grau de entrada (" + maxInDegree + ")\nConjunto de sucessores: " + predecessor);
+        System.out.println("O vértice " + maxInDegreeVertex + " tem o maior grau de entrada (" + maxInDegree + ")\nConjunto de predecessores: " + predecessors);
 
     }
 }
