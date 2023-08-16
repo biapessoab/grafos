@@ -3,7 +3,7 @@ import java.util.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
+        // gets file
         File file;
 
         Scanner inpScanner = new Scanner(System.in);
@@ -24,63 +24,77 @@ public class App {
 
         Scanner sc = new Scanner(file);
 
-        // gets the first line: number of vertices and edges
+        // gets total number of vertices and edges
         int vertices = sc.nextInt();
         int edges = sc.nextInt();
 
-        // creates the origin and destination arrays
-        int[] originArray = new int[edges + 1];
-        int[] destinationArray = new int[edges + 1];
+        // creates the edges array
+        ArrayList<Aresta> edgesArray = new ArrayList<Aresta>();
 
-        int index = 1;
-
-        // adds each origin and destination to the arrays
+        // reads the file and adds the vertices to the edges array
         while (sc.hasNext()) {
             int start = sc.nextInt();
             int end = sc.nextInt();
 
-            originArray[index] = start;
-            destinationArray[index] = end;
+            Aresta edge = new Aresta(start, end);
 
-            index++;
+            edgesArray.add(edge);
         }
 
-        int[] outDegree = new int[vertices + 1];
+        // checks the out degree
+        int[] outDegrees = new int[vertices + 1];
 
-        for (int i = 1; i <= edges; i++) {
-            outDegree[originArray[i]]++;
+        for (Aresta edge : edgesArray) {
+            outDegrees[edge.getStart()]++;
         }
 
         int maxOutDegreeVertex = 1;
-        int maxOutDegree = outDegree[1];
+        int maxOutDegree = outDegrees[1];
 
-        // checks whats the max degree vertex
         for (int i = 2; i <= vertices; i++) {
-            if (outDegree[i] > maxOutDegree) {
-                maxOutDegree = outDegree[i];
+            if (outDegrees[i] > maxOutDegree) {
                 maxOutDegreeVertex = i;
+                maxOutDegree = outDegrees[i];
             }
         }
 
-        int[] successors = new int[edges + 1];
-        int cont = 1;
+        // gets the successors
+        ArrayList<Integer> successors = new ArrayList<Integer>();
 
-        // knowing the max degree vertex, checks the successors
-        for (int i = 1; i <= edges; i++) {
-            if (originArray[i] == maxOutDegreeVertex) {
-                successors[cont] = destinationArray[i];
-                cont++;
+        for (Aresta edge : edgesArray) {
+            if (edge.getStart() == maxOutDegreeVertex) {
+                successors.add(edge.getEnd());
             }
         }
 
-        // sysout
-        System.out.println("O vértice com o maior grau de saída é o vértice " + maxOutDegreeVertex + " com grau " + maxOutDegree);
-        System.out.println("Sucessores: ");
-        for (int i = 1; i < cont; i++) {
-            System.out.print(successors[i] + " ");
+        // checks the in degree
+        int[] inDegrees = new int[vertices + 1];
+
+        for (Aresta edge : edgesArray) {
+            inDegrees[edge.getEnd()]++;
         }
 
-        sc.close();
-        inpScanner.close();
+        int maxInDegreeVertex = 1;
+        int maxInDegree = inDegrees[1];
+
+        for (int i = 2; i <= vertices; i++) {
+            if (inDegrees[i] > maxInDegree) {
+                maxInDegreeVertex = i;
+                maxInDegree = inDegrees[i];
+            }
+        }
+
+        // gets the predecessors
+        ArrayList<Integer> predecessor = new ArrayList<Integer>();
+
+        for (Aresta edge : edgesArray) {
+            if (edge.getEnd() == maxInDegreeVertex) {
+                predecessor.add(edge.getStart());
+            }
+        }
+
+        System.out.println("O vértice " + maxOutDegreeVertex + " tem o maior grau de saída (" + maxOutDegree + ")\nConjunto de sucessores: " + successors);
+        System.out.println("O vértice " + maxInDegreeVertex + " tem o maior grau de entrada (" + maxInDegree + ")\nConjunto de sucessores: " + predecessor);
+
     }
 }
