@@ -67,7 +67,7 @@ public class App {
         // gets the successors
         ArrayList<Integer> successors = new ArrayList<Integer>();
 
-        int count = 1;
+        int count = 0;
 
         for (int edge : originArray) {
             if (edge == maxOutDegreeVertex) {
