@@ -3,53 +3,56 @@ import java.util.*;
 
 public class DFS {
     static int t = 0; // global timer
-    static Grafo graph; 
+    static Grafo graph;
     static List<Vertice> vertices = new ArrayList<>();
     static List<Integer> uniqueOrder = new ArrayList<>();
 
     public DFS(Grafo graph) {
         this.graph = graph;
     }
-    public static void main (String[] args) {
 
-        // creates a graph structure
-        graph = new Grafo();  
-        
-        // gets file
-        File file;
+    // public static void search(int startIndex, int chosen) {
+    //     t++;
 
-        Scanner inpScanner = new Scanner(System.in);
+    //     vertices.get(startIndex).setTd(t);
 
-        // gets the file
-        System.out.println("Arquivo lido: (1: 100 vértices ou 2: 50000 vértices");
-        int fileChoice = inpScanner.nextInt();
 
-        if (fileChoice == 1) {
-            file = new File("src/graph-test-100.txt");
-        } else if (fileChoice == 2) {
-            file = new File("src/graph-test-50000.txt");
-        } else {
-            System.out.println("Escolha inválida.");
-            inpScanner.close();
-            return;
-        }
+    //     System.out.println("Visitando vértice: " + (startIndex + 1));
 
-        // gets the chosen vertice
-        System.out.print("Vértice escolhido: ");
-        int chosenVertice = inpScanner.nextInt();
-        
-        // search(vertices.get(0));
-    }
 
-    // public static void search(Vertice v) {
-    //     t = t++;
-    //     v.setTd(t);
+    //     for (int i = 1; i < graph.getOriginArray().length; i++) {
+    //         if (graph.getOriginArray()[i] == (startIndex + 1)) {
+    //             int destino = graph.getDestinationArray()[i];
+    //             int adjacenteIndex = destino - 1; 
 
-    //     for(int i = 0; i<graph.getOriginArray().length; i++) {
-    //         if(i == Integer.valueOf(v.toString())) {
-                
+    //             if (vertices.get(adjacenteIndex).getTd() == 0) {
+    //                 if(startIndex == chosen) {
+    //                     System.out.println("Visitar aresta de árvore (" + (startIndex + 1) + ", " + destino + ")");
+    //                 }
+    //                 search(adjacenteIndex, chosen);
+    //             }
+    //             else {
+    //                 if (vertices.get(adjacenteIndex).getTt() == 0) {
+    //                     if (startIndex == chosen) {
+    //                         System.out.println("Visitar aresta de retorno (" + (startIndex + 1) + ", " + destino + ")");
+    //                     }
+    //                 }
+    //                 else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
+    //                     if (startIndex == chosen) {
+    //                         System.out.println("Visitar aresta de avanço (" + (startIndex + 1) + ", " + destino + ")");
+    //                     }
+    //                 } else {
+    //                     if (startIndex == chosen) {
+    //                         System.out.println("Visitar aresta de cruzamento (" + (startIndex + 1) + ", " + destino + ")");
+    //                     }
+    //                 }
+    //             }
     //         }
     //     }
+
+    //     t++; 
+        
+    //     vertices.get(startIndex).setTt(t);
     // }
 
     public void order() {
@@ -110,8 +113,8 @@ public class DFS {
             vertices.add(vertice);
         }
 
-        for (Vertice v : vertices) {
-            System.out.println(v.getFather());
-        }
+        // for (Vertice v : vertices) {
+        // System.out.println(v.getFather());
+        // }
     }
 }

@@ -14,7 +14,7 @@ public class Grafo {
         Scanner inpScanner = new Scanner(System.in);
 
         // gets the file
-        System.out.println("Arquivo lido: (1: 100 vértices ou 2: 50000 vértices");
+        System.out.println("Arquivo lido: (1: 100 vértices ou 2: 50000 vértices)");
         int fileChoice = inpScanner.nextInt();
 
         if (fileChoice == 1) {
@@ -26,6 +26,10 @@ public class Grafo {
             inpScanner.close();
             return;
         }
+
+        // gets the chosen vertice
+        System.out.print("Vértice escolhido: ");
+        int chosenVertice = inpScanner.nextInt();
 
         Scanner sc = new Scanner(file);
 
@@ -113,6 +117,7 @@ public class Grafo {
         Grafo graph = new Grafo();
         DFS dfs = new DFS(graph);
         dfs.order();
+        // dfs.search(0, chosenVertice);
     }
 
     public int[] getOriginArray() {
