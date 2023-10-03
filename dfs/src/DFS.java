@@ -11,49 +11,49 @@ public class DFS {
         this.graph = graph;
     }
 
-    // public static void search(int startIndex, int chosen) {
-    //     t++;
+    public static void search(int startIndex, int chosen) {
+        t++;
 
-    //     vertices.get(startIndex).setTd(t);
-
-
-    //     System.out.println("Visitando vértice: " + (startIndex + 1));
+        vertices.get(startIndex).setTd(t);
 
 
-    //     for (int i = 1; i < graph.getOriginArray().length; i++) {
-    //         if (graph.getOriginArray()[i] == (startIndex + 1)) {
-    //             int destino = graph.getDestinationArray()[i];
-    //             int adjacenteIndex = destino - 1; 
+        System.out.println("Visitando vértice: " + (startIndex + 1));
 
-    //             if (vertices.get(adjacenteIndex).getTd() == 0) {
-    //                 if(startIndex == chosen) {
-    //                     System.out.println("Visitar aresta de árvore (" + (startIndex + 1) + ", " + destino + ")");
-    //                 }
-    //                 search(adjacenteIndex, chosen);
-    //             }
-    //             else {
-    //                 if (vertices.get(adjacenteIndex).getTt() == 0) {
-    //                     if (startIndex == chosen) {
-    //                         System.out.println("Visitar aresta de retorno (" + (startIndex + 1) + ", " + destino + ")");
-    //                     }
-    //                 }
-    //                 else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
-    //                     if (startIndex == chosen) {
-    //                         System.out.println("Visitar aresta de avanço (" + (startIndex + 1) + ", " + destino + ")");
-    //                     }
-    //                 } else {
-    //                     if (startIndex == chosen) {
-    //                         System.out.println("Visitar aresta de cruzamento (" + (startIndex + 1) + ", " + destino + ")");
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
 
-    //     t++; 
+        for (int i = 1; i < graph.getOriginArray().length; i++) {
+            if (graph.getOriginArray()[i] == (startIndex + 1)) {
+                int destino = graph.getDestinationArray()[i];
+                int adjacenteIndex = destino - 1; 
+
+                if (vertices.get(adjacenteIndex).getTd() == 0) {
+                    if(startIndex == chosen) {
+                        System.out.println("Visitar aresta de árvore (" + (startIndex + 1) + ", " + destino + ")");
+                    }
+                    search(adjacenteIndex, chosen);
+                }
+                else {
+                    if (vertices.get(adjacenteIndex).getTt() == 0) {
+                        if (startIndex == chosen) {
+                            System.out.println("Visitar aresta de retorno (" + (startIndex + 1) + ", " + destino + ")");
+                        }
+                    }
+                    else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
+                        if (startIndex == chosen) {
+                            System.out.println("Visitar aresta de avanço (" + (startIndex + 1) + ", " + destino + ")");
+                        }
+                    } else {
+                        if (startIndex == chosen) {
+                            System.out.println("Visitar aresta de cruzamento (" + (startIndex + 1) + ", " + destino + ")");
+                        }
+                    }
+                }
+            }
+        }
+
+        t++; 
         
-    //     vertices.get(startIndex).setTt(t);
-    // }
+        vertices.get(startIndex).setTt(t);
+    }
 
     public void order() {
         int[] originArray = graph.getOriginArray();
@@ -112,9 +112,5 @@ public class DFS {
             Vertice vertice = new Vertice();
             vertices.add(vertice);
         }
-
-        // for (Vertice v : vertices) {
-        // System.out.println(v.getFather());
-        // }
     }
 }
