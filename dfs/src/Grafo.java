@@ -117,7 +117,7 @@ public class Grafo {
         Grafo graph = new Grafo();
         DFS dfs = new DFS(graph);
         dfs.order();
-        dfs.search(0, chosenVertice);
+        dfs.search(1, chosenVertice);
     }
 
     public int[] getOriginArray() {

@@ -13,45 +13,37 @@ public class DFS {
 
     public static void search(int startIndex, int chosen) {
         t++;
-
         vertices.get(startIndex).setTd(t);
 
-
-        System.out.println("Visitando vértice: " + (startIndex + 1));
-
-
-        for (int i = 1; i < graph.getOriginArray().length; i++) {
-            if (graph.getOriginArray()[i] == (startIndex + 1)) {
+        for (int i = 0; i < graph.getOriginArray().length; i++) {
+            if (graph.getOriginArray()[i] == startIndex) {
                 int destino = graph.getDestinationArray()[i];
-                int adjacenteIndex = destino - 1; 
+                int adjacenteIndex = destino - 1;
 
+                // arestas de arvore
                 if (vertices.get(adjacenteIndex).getTd() == 0) {
-                    if(startIndex == chosen) {
-                        System.out.println("Visitar aresta de árvore (" + (startIndex + 1) + ", " + destino + ")");
-                    }
+                    System.out.println("Aresta de árvore (" + startIndex + ", " + destino + ")");
                     search(adjacenteIndex, chosen);
-                }
+                } 
                 else {
-                    if (vertices.get(adjacenteIndex).getTt() == 0) {
-                        if (startIndex == chosen) {
-                            System.out.println("Visitar aresta de retorno (" + (startIndex + 1) + ", " + destino + ")");
-                        }
-                    }
-                    else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
-                        if (startIndex == chosen) {
-                            System.out.println("Visitar aresta de avanço (" + (startIndex + 1) + ", " + destino + ")");
-                        }
-                    } else {
-                        if (startIndex == chosen) {
-                            System.out.println("Visitar aresta de cruzamento (" + (startIndex + 1) + ", " + destino + ")");
+                    // just for the chosen vertice
+                    if (startIndex == chosen) {
+                        if (vertices.get(adjacenteIndex).getTt() == 0) {
+                            // arestas de retorno
+                            System.out.println("Aresta de retorno (" + startIndex + ", " + destino + ")");
+                        } else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
+                            // arestas de avanço
+                            System.out.println("Aresta de avanço (" + startIndex + ", " + destino + ")");
+                        } else {
+                            // arestas de cruzamento
+                            System.out.println("Aresta de cruzamento (" + startIndex + ", " + destino + ")");
                         }
                     }
                 }
             }
         }
 
-        t++; 
-        
+        t++;
         vertices.get(startIndex).setTt(t);
     }
 
@@ -64,7 +56,6 @@ public class DFS {
         quickSort(sortedArray, 1, sortedArray.length - 1);
 
         // add vertex only once
-
         int prevVertice = -1;
         for (int i = 1; i < sortedArray.length; i++) {
             int currentVertice = sortedArray[i];
