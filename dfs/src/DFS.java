@@ -14,38 +14,33 @@ public class DFS {
     public static void search(int startIndex, int chosen) {
         t++;
         vertices.get(startIndex).setTd(t);
-
+    
         for (int i = 0; i < graph.getOriginArray().length; i++) {
             if (graph.getOriginArray()[i] == startIndex) {
-                int destino = graph.getDestinationArray()[i];
-                int adjacenteIndex = destino - 1;
-
-                // arestas de arvore
-                if (vertices.get(adjacenteIndex).getTd() == 0) {
-                    System.out.println("Aresta de árvore (" + startIndex + ", " + destino + ")");
-                    search(adjacenteIndex, chosen);
+                int destination = graph.getDestinationArray()[i];
+    
+                if (vertices.get(destination).getTd() == 0) {
+                    // tree edge
+                    System.out.println("Aresta de árvore (" + startIndex + ", " + destination + ")");
+                    search(destination, chosen);
                 } 
-                else {
-                    // just for the chosen vertice
-                    if (startIndex == chosen) {
-                        if (vertices.get(adjacenteIndex).getTt() == 0) {
-                            // arestas de retorno
-                            System.out.println("Aresta de retorno (" + startIndex + ", " + destino + ")");
-                        } else if (vertices.get(startIndex).getTd() < vertices.get(adjacenteIndex).getTd()) {
-                            // arestas de avanço
-                            System.out.println("Aresta de avanço (" + startIndex + ", " + destino + ")");
-                        } else {
-                            // arestas de cruzamento
-                            System.out.println("Aresta de cruzamento (" + startIndex + ", " + destino + ")");
-                        }
+                if (startIndex == chosen) {
+                    // all types of edges
+                    if (vertices.get(destination).getTt() == 0) {
+                        System.out.println("Aresta de retorno (" + startIndex + ", " + destination + ")");
+                    } else if (vertices.get(startIndex).getTd() < vertices.get(destination).getTd()) {
+                        System.out.println("Aresta de avanço (" + startIndex + ", " + destination + ")");
+                    } else {
+                        System.out.println("Aresta de cruzamento (" + startIndex + ", " + destination + ")");
                     }
                 }
             }
         }
-
+    
         t++;
         vertices.get(startIndex).setTt(t);
     }
+    
 
     public void order() {
         int[] originArray = graph.getOriginArray();
