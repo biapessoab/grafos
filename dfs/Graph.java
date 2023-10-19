@@ -1,60 +1,16 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Grafo {
-
+public class Graph {
+    // gets file
+    static File file;
+    static int vertices;
     static int[] originArray;
     static int[] destinationArray;
-
     public static void main(String[] args) throws Exception {
-        // gets file
-        File file;
-
-        Scanner inpScanner = new Scanner(System.in);
-
-        // gets the file
-        System.out.println("Arquivo lido: (1: 100 vértices ou 2: 50000 vértices)");
-        int fileChoice = inpScanner.nextInt();
-
-        if (fileChoice == 1) {
-            file = new File("src/graph-test-100.txt");
-        } else if (fileChoice == 2) {
-            file = new File("src/graph-test-50000.txt");
-        } else {
-            System.out.println("Escolha inválida.");
-            inpScanner.close();
-            return;
-        }
-
-        // gets the chosen vertice
-        System.out.print("Vértice escolhido: ");
-        int chosenVertice = inpScanner.nextInt();
-
-        Scanner sc = new Scanner(file);
-
-        
-        // gets total number of vertices and edges
-        int vertices = sc.nextInt();
-        int edges = sc.nextInt();
-        
-        originArray = new int[edges + 1];
-        destinationArray = new int[edges + 1];
-
-        // creates the edges array
-        int cont = 1;
-
-        // reads the file and adds the vertices to the edges array
-        while (sc.hasNext()) {
-            int start = sc.nextInt();
-            int end = sc.nextInt();
-
-            originArray[cont] = start;
-            destinationArray[cont] = end;
-            cont++;
-        }
-
-        sc.close();
 
         // checks the out degree
         int[] outDegrees = new int[vertices + 1];
@@ -113,19 +69,48 @@ public class Grafo {
             c++;
         }
 
-        // order the array
-        Grafo graph = new Grafo();
-        DFS dfs = new DFS(graph);
-        dfs.order();
-        dfs.search(1, chosenVertice);
+        System.out.println("O vértice " + maxOutDegreeVertex + " tem o maior grau de saída (" + maxOutDegree + ")\nConjunto de sucessores: " + successors);
+        System.out.println("O vértice " + maxInDegreeVertex + " tem o maior grau de entrada (" + maxInDegree + ")\nConjunto de predecessores: " + predecessors);
+
     }
 
-    public int[] getOriginArray() {
-        return originArray;
-    }
+    public static void read(File file) throws FileNotFoundException{
 
-    public int[] getDestinationArray() {
-        return destinationArray;
-    }
+        Scanner sc = new Scanner(file);
 
+        // gets total number of vertices and edges
+        vertices = sc.nextInt();
+        int edges = sc.nextInt();
+
+        originArray = new int[edges+1];
+        destinationArray = new int[edges+1];
+
+        // creates the edges array
+        int cont = 1;
+
+        // reads the file and adds the vertices to the edges array
+        while (sc.hasNext()) {
+            int start = sc.nextInt();
+            int end = sc.nextInt();
+
+            originArray[cont] = start;
+            destinationArray[cont] = end;
+            cont++;
+        }
+
+        // System.out.println("leuuuuuu");
+
+        sc.close();
+    }
+    
+    public static int[] getSortedDestinationArray() {
+        int[] sortedDestinationArray = Arrays.copyOf(destinationArray, destinationArray.length);
+    
+        for (int i = 1; i < originArray.length - 1; i++) {
+            if (originArray[i] < originArray[i + 1]) {
+                Arrays.sort(sortedDestinationArray, originArray[i], originArray[i + 1]);
+            }
+        }
+        return sortedDestinationArray;
+    }
 }
