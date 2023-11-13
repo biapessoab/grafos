@@ -50,12 +50,14 @@ class MaxFlow {
       maxFlow += pathFlow;
     }
 
-    System.out.println("Number of disjoint paths: " + maxFlow);
+    int pathsSize = paths.size();
+
+    System.out.println("Number of disjoint paths: " + pathsSize);
     System.out.println("Paths:");
     for (String currentPath : paths) {
       System.out.println(currentPath);
     }
-    return maxFlow;
+    return pathsSize;
   }
 
   boolean search(ArrayList<LinkedList<Integer>> graph, int source, int destination, int parent[]) {
