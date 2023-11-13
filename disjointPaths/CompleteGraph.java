@@ -50,14 +50,14 @@ public class CompleteGraph {
         for (List<Integer> neighbors : adjacencies) {
             totalEdges += neighbors.size();
         }
-        return totalEdges / 2; // Each edge is counted twice (once for each vertex), so divide by 2
+        return totalEdges / 2;
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter the number of vertices in the graph: ");
-        int numVertices = scanner.nextInt();
+        int numVertices = sc.nextInt();
 
         CompleteGraph graph = new CompleteGraph(numVertices);
 
